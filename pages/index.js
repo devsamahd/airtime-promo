@@ -30,7 +30,7 @@ export default function RedeemForm(){
       return setStatus('warning')
     }
 
-    const red = await fetch('http://127.0.0.1:310/generateCode',
+    const red = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode`,
     {
      method:'PUT',
      headers: {

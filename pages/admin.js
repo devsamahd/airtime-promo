@@ -12,7 +12,7 @@ const Home =({resp}) => {
     e.preventDefault()
     try{
       setLoading(true)
-      const gen = await fetch('http://127.0.0.1:310/generateCode',
+      const gen = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode`,
       {
         method:'POST',
         headers: {
@@ -25,7 +25,7 @@ const Home =({resp}) => {
     }catch(e){
       console.log(e)
     }finally{
-      const data = await fetch('http://127.0.0.1:310/generateCode')
+      const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode`)
       const res =await data.json()
       setRes(res)
       setLoading(false)
@@ -64,7 +64,7 @@ const protectedRoute = withPageAuthRequired(Home)
 export default protectedRoute
 
 export const getStaticProps = async() => {
-  const data = await fetch('http://127.0.0.1:310/generateCode')
+  const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode`)
   const resp = await data.json()
   return {
     props:{resp}

@@ -19,37 +19,47 @@ export default function RedeemForm(){
   const [number, setNumber] = useState('')
   const [status, setStatus] = useState('')
   const [message, setMessage] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const redeem = async() => {
-    if(!code || !number) {
-      setMessage('Please complete the form')
-      return setStatus('warning')
+
+    try{
+      setLoading(true)
+      if(!code || !number) {
+        setMessage('Please complete the form')
+        return setStatus('warning')
+      }
+      if(!((/^[0-9]{10,11}$/).test(number))){
+        setMessage('Invalid number')
+        return setStatus('warning')
+      }
+
+      const red = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode`,
+      {
+      method:'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body:JSON.stringify({code})
+    })
+
+    const res = await red.json()
+
+    if(res.status === 404) {
+      setMessage('Code does not exist sorry')
+      return setStatus('error')
+    }else if(res.status === 403){
+      setMessage('Code has been used, sorry!')
+      return setStatus('error')
     }
-    if(!((/^[0-9]{10,11}$/).test(number))){
-      setMessage('Invalid number')
-      return setStatus('warning')
+    setMessage(`Congrats your number ${number} has been credited with #${res.value} worth of airtime`)
+    return setStatus('success')
+    }catch(e){
+      console.log(e)
+    }finally{
+      setLoading(false)
     }
-
-    const red = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode`,
-    {
-     method:'PUT',
-     headers: {
-       'Content-Type': 'application/json'
-     },
-     body:JSON.stringify({code})
-   })
-
-  const res = await red.json()
-
-  if(res.status === 404) {
-    setMessage('Code does not exist sorry')
-    return setStatus('error')
-  }else if(res.status === 403){
-    setMessage('Code has been used, sorry!')
-    return setStatus('error')
-  }
-  setMessage(`Congrats your number ${number} has been credited with #${res.value} worth of airtime`)
-  return setStatus('success')
+    
   }
 
   
@@ -95,15 +105,21 @@ export default function RedeemForm(){
           />
         </FormControl>
         <Stack spacing={6}>
-          <Button
-            bg={'blue.400'}
-            color={'white'}
-            onClick={redeem}
-            _hover={{
-              bg: 'blue.500',
-            }}>
-            Redeem
-          </Button>
+        {loading ?
+        <Stack>
+        <Skeleton height='70px' />
+      </Stack>:
+      <Button
+      bg={'blue.400'}
+      color={'white'}
+      onClick={redeem}
+      _hover={{
+        bg: 'blue.500',
+      }}>
+      Redeem
+    </Button>
+        }
+          
         </Stack>
         {status && <Alert status={status}>
           <AlertIcon />

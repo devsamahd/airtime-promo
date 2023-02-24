@@ -23,9 +23,9 @@ export default function RedeemForm(){
   const [loading, setLoading] = useState(false)
 
   const redeem = async() => {
-
+    setLoading(true)
     try{
-      setLoading(true)
+      
       if(!code || !number) {
         setMessage('Please complete the form')
         return setStatus('warning')

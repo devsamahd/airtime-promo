@@ -9,7 +9,8 @@ import {
   useColorModeValue,
   Alert,
   AlertIcon,
-  AlertTitle
+  AlertTitle,
+  Skeleton
 } from '@chakra-ui/react';
 import { useState } from 'react';
 

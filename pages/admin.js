@@ -8,9 +8,9 @@ const Home =({resp}) => {
   const [page, setPage] = useState([0,10])
   const [type, setType] = useState(null)
   const [res, setRes] = useState(resp.slice(page[0],page[1]))
-  const [number, setNumber] = useState(null)
+  const [number, setNumber] = useState(0)
   const [loading, setLoading] = useState(false)
-  const [value, setValue] = useState(null)
+  const [value, setValue] = useState(0)
 
   const increment = () => {
     setPage([page[0]+10, page[1]+10])

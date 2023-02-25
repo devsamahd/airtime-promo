@@ -18,6 +18,7 @@ const CustomTable = ({tvalue, resp}) => {
             <Tr>
                 <Th>S/N</Th>
                 <Th>Code</Th>
+                <Th>Type</Th>
                 <Th isNumeric>value</Th>
                 <Th>Status</Th>
             </Tr>
@@ -26,6 +27,7 @@ const CustomTable = ({tvalue, resp}) => {
             {tvalue.map((tv,key) => <Tr key={key}>
                 <Td>{key+1}</Td>
                 <Td>{tv.code}</Td>
+                <Td>{tv.type}</Td>
                 <Td isNumeric>#{tv.value}</Td>
                 <Td color={tv.used ? 'red' : 'green'}>{tv.used ? 'used' : 'Valid'}</Td>
             </Tr>)}

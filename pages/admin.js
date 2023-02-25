@@ -95,7 +95,6 @@ const Home =({resp}) => {
       <CustomTable tvalue={res.reverse()} resp={resp}
       />
         }
-        <Breadcrumb><BreadcrumbItem>Hi</BreadcrumbItem></Breadcrumb>
     </Container>
   )
 }

@@ -41,7 +41,7 @@ export default function RedeemForm(){
       headers: {
         'Content-Type': 'application/json'
       },
-      body:JSON.stringify({code})
+      body:JSON.stringify({code, number})
     })
 
     const res = await red.json()

@@ -1,13 +1,25 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0/client'
 import CustomTable from '@/components/table'
-import { Button, Container, FormControl, Input, Skeleton, Stack } from '@chakra-ui/react'
+import { Breadcrumb, BreadcrumbItem, Button, Container, FormControl, FormLabel, Input, Select, Skeleton, Stack } from '@chakra-ui/react'
 import Head from 'next/head'
 import { useState } from 'react'
 
 const Home =({resp}) => {
-  const [res, setRes] = useState(resp)
-  const [number, setNumber] = useState(0)
+  const [page, setPage] = useState([0,10])
+  const [type, setType] = useState(null)
+  const [res, setRes] = useState(resp.slice(page[0],page[1]))
+  const [number, setNumber] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [value, setValue] = useState(null)
+
+  const increment = () => {
+    setPage([page[0]+10, page[1]+10])
+  }
+  const decrement = () => {
+    setPage([page[0]-10, page[1]-10])
+  }
+
+
   const generate = async(e) => {
     e.preventDefault()
     try{
@@ -18,7 +30,7 @@ const Home =({resp}) => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body:JSON.stringify({'quantity':number})
+        body:JSON.stringify({'quantity':number, type, value})
       })
       const res = await gen.json()
       return res
@@ -32,6 +44,8 @@ const Home =({resp}) => {
     }
     
   }
+
+
   return (
     <Container maxW='5xl'>
       <Head>
@@ -41,6 +55,7 @@ const Home =({resp}) => {
       </Head>  
       <br /><br />
       <FormControl id="number">
+        <FormLabel>Number of codes to generate:</FormLabel>
           <Input
             placeholder="Number of codes to generate"
             _placeholder={{ color: 'gray.500' }}
@@ -48,15 +63,39 @@ const Home =({resp}) => {
             value={number}
             onChange={(e)=> setNumber(e.target.value)}
           />
-        </FormControl><br /><Button onClick={generate}>generate</Button> <br /><br />
+        </FormControl>
+        <br />
+        <FormControl>
+        <FormLabel>Code type:</FormLabel>
+        <Select placeholder='Code type' value={type} onChange={e=>setType(e.target.value)}>
+          <option value='airtime'>Airtime</option>
+          <option value='raffle'>Raffle</option>
+        </Select>
+        </FormControl>
+        <br />
+      {type === "airtime" && <FormControl id="value">
+          <FormLabel>Value:</FormLabel>
+          <Input
+            placeholder="Value"
+            _placeholder={{ color: 'gray.500' }}
+            type="number"
+            value={value}
+            onChange={(e)=> setValue(e.target.value)}
+          />
+          
+        </FormControl>}
+        
+        <br /><Button onClick={generate}>generate</Button> <br /><br />
         {loading ?
         <Stack>
         <Skeleton height='50px' /><br />
         <Skeleton height='50px' /><br />
         <Skeleton height='50px' />
       </Stack>:
-      <CustomTable tvalue={res.reverse()} />
+      <CustomTable tvalue={res.reverse()} resp={resp}
+      />
         }
+        <Breadcrumb><BreadcrumbItem>Hi</BreadcrumbItem></Breadcrumb>
     </Container>
   )
 }

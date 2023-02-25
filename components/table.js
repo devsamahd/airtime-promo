@@ -1,10 +1,10 @@
 import { TableContainer, Th, Td, Table, TableCaption, Thead, Tr, Tbody, Tfoot } from '@chakra-ui/react'
 import React from 'react'
 
-const CustomTable = ({tvalue}) => {
-    const used = tvalue.filter(t => t.used === true)
+const CustomTable = ({tvalue, resp}) => {
+    const used = resp.filter(t => t.used === true)
     let amt = []
-    tvalue.map(t => amt.push(t.value))
+    resp.map(t => amt.push(t.value))
     let total=0;
     for (let i = 0; i < amt.length; i++) {
         total = total + amt[i]; 
@@ -32,8 +32,8 @@ const CustomTable = ({tvalue}) => {
             </Tbody>
             <Tfoot>
             <Tr>
-                <Th>Total: {tvalue.length}</Th>
-                <Th>Used: {used.length} Unused: {tvalue.length - used.length}</Th>
+                <Th>Total: {resp.length}</Th>
+                <Th>Used: {used.length} Unused: {resp.length - used.length}</Th>
                 <Th isNumeric>Total: {total}</Th>
                 <Th ></Th>
             </Tr>

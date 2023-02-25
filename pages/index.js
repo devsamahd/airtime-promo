@@ -52,6 +52,12 @@ export default function RedeemForm(){
     }else if(res.status === 403){
       setMessage('Code has been used, sorry!')
       return setStatus('error')
+    }else if(res.status === 400){
+      setMessage('Bad request, Please try again later')
+      return setStatus('info')
+    }else if(res.status === 401){
+      setMessage()
+      return setStatus()
     }
     setMessage(`Congrats your number ${number} has been credited with #${res.value} worth of airtime`)
     return setStatus('success')

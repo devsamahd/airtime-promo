@@ -105,6 +105,7 @@ export const getStaticProps = async() => {
   const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode`)
   const resp = await data.json()
   return {
-    props:{resp}
+    props:{resp},
+    fallback: false
   }
 }

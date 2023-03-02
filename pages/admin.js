@@ -101,7 +101,7 @@ const Home =({resp}) => {
 const protectedRoute = withPageAuthRequired(Home)
 export default protectedRoute
 
-export const getStaticProps = async() => {
+export const getServerSideProps = async() => {
   const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode`)
   const resp = await data.json()
   return {

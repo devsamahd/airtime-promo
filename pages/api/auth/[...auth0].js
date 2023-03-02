@@ -4,6 +4,6 @@ export default handleAuth({
     async login(request, response) {
         await handleLogin(request, response, {
           returnTo: '/admin',
-        })  ;
+        })
       },
 });

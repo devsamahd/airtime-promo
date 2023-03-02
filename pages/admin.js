@@ -1,6 +1,6 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0/client'
 import CustomTable from '@/components/table'
-import { Breadcrumb, BreadcrumbItem, Button, Container, FormControl, FormLabel, Input, Select, Skeleton, Stack } from '@chakra-ui/react'
+import { Button, Container, FormControl, FormLabel, Input, Select, Skeleton, Stack } from '@chakra-ui/react'
 import Head from 'next/head'
 import { useState } from 'react'
 
@@ -105,7 +105,6 @@ export const getServerSideProps = async() => {
   const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode`)
   const resp = await data.json()
   return {
-    props:{resp},
-    fallback: false
+    props:{resp}
   }
 }

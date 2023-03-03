@@ -2,7 +2,7 @@ import { TableContainer, Th, Td, Table, TableCaption, Thead, Tr, Tbody, Tfoot } 
 import React from 'react'
 
 const CustomTable = ({tvalue, resp}) => {
-    const used = resp.filter(t => t.used === true)
+    const used = resp.filter(t => t.used.status === true)
     let amt = []
     resp.map(t => amt.push(t.value))
     let total=0;
@@ -12,7 +12,7 @@ const CustomTable = ({tvalue, resp}) => {
 
   return (
     <TableContainer>
-        <Table variant='striped' colorScheme='teal'>
+        <Table>
             <TableCaption>All codes</TableCaption>
             <Thead>
             <Tr>
@@ -29,7 +29,7 @@ const CustomTable = ({tvalue, resp}) => {
                 <Td>{tv.code}</Td>
                 <Td>{tv.type}</Td>
                 <Td isNumeric>#{tv.value}</Td>
-                <Td color={tv.used ? 'red' : 'green'}>{tv.used ? 'used' : 'Valid'}</Td>
+                <Td color={tv.used.status ? 'red' : 'green'}>{tv.used.status ? 'used' : 'Valid'}</Td>
             </Tr>)}
             </Tbody>
             <Tfoot>

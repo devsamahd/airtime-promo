@@ -1,7 +1,11 @@
 import { TableContainer, Th, Td, Table, TableCaption, Thead, Tr, Tbody, Tfoot } from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 
 const CustomTable = ({tvalue, resp}) => {
+    const [page, setPage] = useState([0,10])
+    const inc = () => {
+        setPage([page[0], page[1]+10])
+      }
     const used = resp.filter(t => t.used.status === true)
     let amt = []
     resp.map(t => amt.push(t.value))
@@ -13,7 +17,7 @@ const CustomTable = ({tvalue, resp}) => {
   return (
     <TableContainer>
         <Table>
-            <TableCaption>All codes</TableCaption>
+            <TableCaption onClick={inc} _hover={{cursor:'pointer'}}>Show more</TableCaption>
             <Thead>
             <Tr>
                 <Th>S/N</Th>
@@ -24,7 +28,7 @@ const CustomTable = ({tvalue, resp}) => {
             </Tr>
             </Thead>
             <Tbody>
-            {tvalue.map((tv,key) => <Tr key={key}>
+            {(tvalue.slice(page[0],page[1])).map((tv,key) => <Tr key={key}>
                 <Td>{key+1}</Td>
                 <Td>{tv.code}</Td>
                 <Td>{tv.type}</Td>

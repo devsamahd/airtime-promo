@@ -1,24 +1,15 @@
 import CustomTable from '@/components/table'
 import { Box, Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Skeleton, Stack, useDisclosure } from '@chakra-ui/react'
 import { useState } from 'react'
-import { FaPlus } from 'react-icons/fa'
+import { FaFileDownload, FaPlus } from 'react-icons/fa'
 
 const Codes =({resp, orgid}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [page, setPage] = useState([0,10])
   const [type, setType] = useState(null)
-  const [res, setRes] = useState((resp.filter(res => res.orgId === orgid)).slice(page[0],page[1]))
+  const [res, setRes] = useState(resp)
   const [number, setNumber] = useState(0)
   const [loading, setLoading] = useState(false)
   const [value, setValue] = useState(0)
-
-  const increment = () => {
-    setPage([page[0]+10, page[1]+10])
-  }
-  const decrement = () => {
-    setPage([page[0]-10, page[1]-10])
-  }
-
 
   const generate = async(e) => {
     e.preventDefault()
@@ -49,7 +40,8 @@ const Codes =({resp, orgid}) => {
   return (
     <>
 
-      <Box onClick={onOpen} pos={'fixed'} bottom={'60px'} right={'60px'} fontSize={30} borderRadius={'50%'} p={2} bg={'green.400'} color="white" _hover={{bg: 'green.600'}}><FaPlus /></Box>
+      <Box onClick={onOpen} pos={'fixed'} bottom={'60px'} right={'60px'} fontSize={30} borderRadius={'50%'} p={2} bg={'green.700'} color="white" _hover={{bg: 'green.600'}}><FaPlus /></Box>
+      <Box pos={'fixed'} bottom={'120px'} right={'60px'} fontSize={20} borderRadius={'50%'} p={3} bg={'green.400'} color="white" _hover={{bg: 'green.600'}}><FaFileDownload /></Box>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

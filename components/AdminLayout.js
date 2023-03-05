@@ -34,7 +34,7 @@ import {
 const LinkItems = [
   { name: 'Home', icon: FiHome, link:"/admin" },
   { name: 'Stats', icon: FiTrendingUp, link:"/admin/stats" },
-  { name: 'Organizations', icon: FiCompass, link:"/admin/orgs" },
+  { name: 'Organizations', icon: FiCompass, link:"/admin/org" },
   { name: 'Settings', icon: FiSettings, link:"/admin"  },
 ];
 
@@ -86,18 +86,18 @@ const SidebarContent = ({ onClose, ...rest }) => {
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
-        <Link href={link.link}><NavItem key={link.name} icon={link.icon}>
+        <NavItem key={link.name} link={link.link} icon={link.icon}>
           {link.name}
-        </NavItem></Link>
+        </NavItem>
       ))}
     </Box>
   );
 };
 
 
-const NavItem = ({ icon, children, ...rest }) => {
+const NavItem = ({ icon, link, children, ...rest }) => {
   return (
-    <Link href="#" style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
+    <Link href={link} style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
       <Flex
         align="center"
         p="4"
@@ -195,7 +195,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
               borderColor={useColorModeValue('gray.200', 'gray.700')}>
               <MenuItem>Profile</MenuItem>
               <MenuDivider />
-              <MenuItem>Sign out</MenuItem>
+              <Link href='/api/auth/logout'><MenuItem>Sign out</MenuItem></Link>
             </MenuList>
           </Menu>
         </Flex>

@@ -58,6 +58,9 @@ import {
       }else if(res.status === 401){
         setMessage()
         return setStatus()
+      }else if(res.type === "raffle"){
+        setMessage(`Congrats your number ${number} has been added to the raffle draw`)
+        return setStatus('success')
       }
       setMessage(`Congrats your number ${number} has been credited with #${res.value} worth of airtime`)
       return setStatus('success')

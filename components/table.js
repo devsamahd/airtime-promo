@@ -6,7 +6,7 @@ const CustomTable = ({tvalue, resp}) => {
     const inc = () => {
         setPage([page[0], page[1]+10])
       }
-    const used = resp.filter(t => t.used.status === true)
+    const used = resp.filter(t => t?.used?.status === true) 
     let amt = []
     resp.map(t => amt.push(t.value))
     let total=0;
@@ -33,10 +33,10 @@ const CustomTable = ({tvalue, resp}) => {
                 <Td>{tv.code}</Td>
                 <Td>{tv.type}</Td>
                 <Td isNumeric>#{tv.value}</Td>
-                <Td color={tv.used.status ? 'red' : 'green'}>{tv.used.status ? 'used' : 'Valid'}</Td>
+                <Td color={tv.used?.status ? 'red' : 'green'}>{tv.used?.status ? 'used' : 'Valid'}</Td>
             </Tr>)}
             </Tbody>
-            <Tfoot>
+            <Tfoot> 
             <Tr>
                 <Th>Total: {resp.length}</Th>
                 <Th>Used: {used.length} Unused: {resp.length - used.length}</Th>

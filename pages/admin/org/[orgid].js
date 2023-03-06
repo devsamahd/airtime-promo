@@ -30,6 +30,7 @@ export const getStaticProps = async({params})=>{
       const res = await data.json()
       const paths =await res.map(org => ({params:{orgid:(org._id).toString()}}))
       return {
-          paths
+          paths,
+          fallback: false
       }
   }

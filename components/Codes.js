@@ -2,11 +2,11 @@ import CustomTable from '@/components/table'
 import { Box, Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Skeleton, Stack, useDisclosure } from '@chakra-ui/react'
 import { useState } from 'react'
 import { FaFileDownload, FaPlus } from 'react-icons/fa'
+import CsvDownload from 'react-json-to-csv'
 
-const Codes =({resp, orgid}) => {
+const Codes =({res, setRes, resp, orgid, orgname}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [type, setType] = useState(null)
-  const [res, setRes] = useState(resp)
   const [number, setNumber] = useState(0)
   const [loading, setLoading] = useState(false)
   const [value, setValue] = useState(0)
@@ -35,18 +35,19 @@ const Codes =({resp, orgid}) => {
     }
     
   }
-
+  const header = ['S/N', 'Code', 'Value', 'Status']
+  const exportable = res.map((cor, key)=> {return {sn: key+1, code:cor.code, value:cor.value, used:cor.usable ? 'valid' : 'used'}})
 
   return (
     <>
 
-      <Box onClick={onOpen} pos={'fixed'} bottom={'60px'} right={'60px'} fontSize={30} borderRadius={'50%'} p={2} bg={'green.700'} color="white" _hover={{bg: 'green.600'}}><FaPlus /></Box>
-      <Box pos={'fixed'} bottom={'120px'} right={'60px'} fontSize={20} borderRadius={'50%'} p={3} bg={'green.400'} color="white" _hover={{bg: 'green.600'}}><FaFileDownload /></Box>
+      <Box onClick={onOpen} pos={'fixed'} bottom={'90px'} right={'60px'} fontSize={30} borderRadius={'50%'} p={2} bg={'green.600'} color="white" _hover={{bg: 'green.600'}}><FaPlus /></Box>
+      <Box pos={'fixed'} bottom={'30px'} right={'60px'} borderRadius={10} p={3} bg={'green.600'} color="white" _hover={{bg: 'green.600'}}><CsvDownload data={exportable} headers={header} delimiter="," filename={orgname}/></Box>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Generate Codes</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
           <FormControl id="number">

@@ -37,7 +37,7 @@ export const getStaticProps = async({params})=>{
   }
 }
   
-  export const getStaticPaths = async ({}) => {
+  export const getStaticPaths = async () => {
       const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/org`)
       const res = await data.json()
       const paths =await res.map(org => ({params:{orgid:(org._id).toString()}}))

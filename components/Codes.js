@@ -4,6 +4,7 @@ import moment from 'moment'
 import { useState } from 'react'
 import { FaPlus } from 'react-icons/fa'
 import CsvDownload from 'react-json-to-csv'
+import Swal from 'sweetalert2'
 
 export const fd = (date) => {
     return moment(date).format('YYYY-MM-DD HH:mm:ss')
@@ -28,14 +29,28 @@ const Codes =({res, setRes, resp, orgid, orgname}) => {
         },
         body:JSON.stringify({'quantity':number, type, value, orgId:orgid})
       })
-      const res = await gen.json()
-      return res
-    }catch(e){
-      console.log(e)
-    }finally{
+      onClose()
+      const res1 = await gen.json()
       const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode`)
       const res =await data.json()
       setRes(res.filter(res => res.orgId === orgid))
+      
+      Swal.fire({
+        title: "Success",
+        text: res1.message,
+        icon: "success",
+        timer: 3000
+      })
+      
+      return res
+    }catch(e){
+      Swal.fire({
+        title: "Error",
+        text: "Server Error. Please bear with us",
+        icon: "error",
+        timer: 3000
+      })
+    }finally{
       setLoading(false)
     }
     

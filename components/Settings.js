@@ -4,7 +4,7 @@ import { FiSettings } from "react-icons/fi"
 import Swal from "sweetalert2"
 
 
-const EditOrg = ({ orgid}) => {
+const EditOrg = ({ orgid, setOrg }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [loading, setLoading] = useState(false)
   const initialRef = useRef(null)
@@ -23,10 +23,13 @@ const EditOrg = ({ orgid}) => {
         body:JSON.stringify({orgName: orgname, orgId: orgid})
       })
       const res = await gen.json()
+      console.log(res)
+      await setOrg(res)
       onClose()
       Swal.fire({
-        title:'Nice',
-        text: 'Organization name updated',
+        title: "Success",
+        text: "Org name updated successfully",
+        icon: "success",
         timer: 3000
       })
       return res
@@ -34,7 +37,7 @@ const EditOrg = ({ orgid}) => {
       console.log(e)
     }finally{
       setLoading(false)
-      
+
     }
   }
 

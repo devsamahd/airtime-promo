@@ -6,7 +6,8 @@ import { withPageAuthRequired } from "@auth0/nextjs-auth0/client"
 import { Box, Heading, Text } from "@chakra-ui/react"
 import { useState } from "react"
 
-const SingleOrg = ({resp, org}) => {
+const SingleOrg = ({resp, orgs}) => {
+  const [org, setOrg] = useState(orgs)
   const [type, setType] = useState('')
   const [status, setStatus] = useState('')
   const [res, setRes] = useState(resp)
@@ -15,7 +16,7 @@ const SingleOrg = ({resp, org}) => {
 
   return (
     <AdminLayout>
-        <Heading size={'lg'} display={'flex'} justifyContent={'space-between'}> <Box display={'flex'}>{org.orgName} <Box fontSize={'xl'}><EditOrg orgid={org._id} /></Box></Box><Box fontSize={'lg'}><FilterDrawer setType={setType} setStatus={setStatus} status={status} type={type} /></Box></Heading>
+        <Heading size={'lg'} display={'flex'} justifyContent={'space-between'}> <Box display={'flex'}>{org.orgName} <Box fontSize={'xl'}><EditOrg orgid={org._id} setOrg={setOrg} /></Box></Box><Box fontSize={'lg'}><FilterDrawer setType={setType} setStatus={setStatus} status={status} type={type} /></Box></Heading>
         <br /><br />
         <Text>Created:</Text>
         <Codes res={actual} orgname={org.orgName} setRes={setRes} resp={resp} orgid={org._id} />
@@ -30,10 +31,10 @@ export const getStaticProps = async({params})=>{
     const resp = await data.json()
     
     const orgreq = await fetch(`${process.env.NEXT_PUBLIC_BE}/org/${orgid}`)
-    const org = await orgreq.json()
+    const orgs = await orgreq.json()
 
     return {
-      props:{resp, org}
+      props:{resp, orgs}
   }
 }
   

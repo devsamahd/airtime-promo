@@ -1,5 +1,6 @@
 import { Box, Button, Center, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure} from "@chakra-ui/react"
 import { useRef, useState } from "react"
+import Swal from "sweetalert2"
 
 
 const AddOrg = ({setOrg}) => {
@@ -20,17 +21,28 @@ const AddOrg = ({setOrg}) => {
         },
         body:JSON.stringify({orgname})
       })
-      const res = await gen.json()
-      console.log(res)
-      return res
-    }catch(e){
-      console.log(e)
-    }finally{
+      await gen.json()
+
       const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/org`)
       const res =await data.json()
       setOrg(res)
-      setLoading(false)
       onClose()
+      Swal.fire({
+        title: "Success",
+        text: "successfully created organization dataset",
+        icon: "success",
+        timer: 3000
+      })
+      return res
+    }catch(e){
+      Swal.fire({
+        title: "An error occured!",
+        icon: "error"
+      })
+      console.log(e)
+    }finally{
+      setLoading(false)
+      
     }
   }
 
@@ -63,7 +75,7 @@ const AddOrg = ({setOrg}) => {
 
           <ModalFooter>
             <Button colorScheme='blue' mr={3} onClick={addOrg}>
-              Save
+              Create
             </Button>
             <Button onClick={onClose}>Cancel</Button>
           </ModalFooter>

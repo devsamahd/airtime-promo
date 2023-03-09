@@ -1,5 +1,6 @@
 import { TableContainer, Th, Td, Table, TableCaption, Thead, Tr, Tbody, Tfoot } from '@chakra-ui/react'
 import React, { useState } from 'react'
+import { fd } from './Codes'
 
 const CustomTable = ({tvalue, resp}) => {
     const [page, setPage] = useState([0,10])
@@ -37,8 +38,8 @@ const CustomTable = ({tvalue, resp}) => {
                 <Td>{tv.type}</Td>
                 <Td isNumeric>#{tv.value}</Td>
                 <Td color={tv.used?.status ? 'red' : 'green'}>{tv.used?.status ? 'used' : 'Valid'}</Td>
-                <Td>{tv.createdAt}</Td>
-                <Td>{tv.used?.status ? tv.used.createdAt : '-'}</Td>
+                <Td>{fd(tv.createdAt)}</Td>
+                <Td>{tv.used?.status ? fd(tv.used.createdAt) : '-'}</Td>
                 <Td>{tv.used?.status ? '+234'+tv.used.number : '-'}</Td>
             </Tr>)}
             </Tbody>

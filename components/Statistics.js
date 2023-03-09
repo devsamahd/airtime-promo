@@ -4,11 +4,12 @@ import AdminLayout from './AdminLayout'
 
 
 
-const Statistics = () => {
+const Statistics = ({stat}) => {
+
   const stats = [
-    { label: 'Total Subscribers', value: '71,887' },
-    { label: 'Avg. Open Rate', value: '56.87%' },
-    { label: 'Avg. Click Rate', value: '12.87%' },
+    { label: 'Total Orgs', value: stat.orgCount },
+    { label: 'Total Codes', value: stat.usableCodesCount+stat.usedCodesCount },
+    { label: 'Total unused codes', value: stat.usableCodesCount },
   ]
   return (
   <AdminLayout>

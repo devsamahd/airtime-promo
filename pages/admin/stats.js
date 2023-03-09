@@ -2,9 +2,8 @@ import Statistics from '@/components/Statistics'
 import { withPageAuthRequired } from '@auth0/nextjs-auth0/client'
 
  function stat({resp}){
-    console.log(resp)
     return (
-        <Statistics />
+        <Statistics stat={resp[0]} />
     )
 }
 

@@ -56,14 +56,14 @@ const EditOrg = ({ orgid}) => {
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl>
-              <FormLabel>Organization Name:</FormLabel>
+              <FormLabel>New Organization Name:</FormLabel>
               <Input ref={initialRef} placeholder='New Org name' value={orgname} onChange={e => setOrgname(e.target.value)} />
             </FormControl>
           </ModalBody>
 
           <ModalFooter>
             <Button colorScheme='blue' mr={3} onClick={upOrg}>
-              Save
+              Update
             </Button>
             <Button onClick={onClose}>Cancel</Button>
           </ModalFooter>

@@ -25,6 +25,9 @@ const CustomTable = ({tvalue, resp}) => {
                 <Th>Type</Th>
                 <Th isNumeric>value</Th>
                 <Th>Status</Th>
+                <Th>Created At</Th>
+                <Th>Redeemed At</Th>
+                <Th>Reedemed By</Th>
             </Tr>
             </Thead>
             <Tbody>
@@ -34,6 +37,9 @@ const CustomTable = ({tvalue, resp}) => {
                 <Td>{tv.type}</Td>
                 <Td isNumeric>#{tv.value}</Td>
                 <Td color={tv.used?.status ? 'red' : 'green'}>{tv.used?.status ? 'used' : 'Valid'}</Td>
+                <Td>{tv.createdAt}</Td>
+                <Td>{tv.used?.status ? tv.used.createdAt : '-'}</Td>
+                <Td>{tv.used?.status ? '+234'+tv.used.number : '-'}</Td>
             </Tr>)}
             </Tbody>
             <Tfoot> 

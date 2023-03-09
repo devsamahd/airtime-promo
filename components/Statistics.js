@@ -9,7 +9,7 @@ const Statistics = ({stat}) => {
   const stats = [
     { label: 'Total Orgs', value: stat.orgCount },
     { label: 'Total Codes', value: stat.usableCodesCount+stat.usedCodesCount },
-    { label: 'Total unused codes', value: stat.usableCodesCount },
+    { label: 'Total unused codes', value: stat.usableCodesCount }
   ]
   return (
   <AdminLayout>

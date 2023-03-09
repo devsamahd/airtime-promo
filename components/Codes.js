@@ -1,7 +1,7 @@
 import CustomTable from '@/components/table'
 import { Box, Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Skeleton, Stack, useDisclosure } from '@chakra-ui/react'
 import { useState } from 'react'
-import { FaFileDownload, FaPlus } from 'react-icons/fa'
+import { FaPlus } from 'react-icons/fa'
 import CsvDownload from 'react-json-to-csv'
 
 const Codes =({res, setRes, resp, orgid, orgname}) => {
@@ -35,8 +35,8 @@ const Codes =({res, setRes, resp, orgid, orgname}) => {
     }
     
   }
-  const header = ['S/N', 'Code', 'Value', 'Status']
-  const exportable = res.map((cor, key)=> {return {sn: key+1, code:cor.code, value:cor.value, used:cor.usable ? 'valid' : 'used'}})
+  const header = ['S/N', 'Code', 'Value', 'Status', 'Created At', 'Redeemed At', 'Redeemed By ']
+  const exportable = res.map((cor, key)=> {return {sn: key+1, code:cor.code, value:cor.value, used:cor.usable ? 'valid' : 'used', createdAt:cor.createdAt, redeemedAt: !cor.used ? '-' : cor.used.createdAt, redeemedBy: cor.used ? cor.used.number : '-'}})
 
   return (
     <>

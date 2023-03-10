@@ -78,7 +78,8 @@ import {
         minH={'100vh'}
         align={'center'}
         justify={'center'}
-        backgroundImage={"url('winbg.png')"}
+        backgroundImage={"url('/winsbg.png')"}
+        backgroundSize={'cover'}
         >
         <Stack
           spacing={4}

@@ -78,7 +78,8 @@ import {
         minH={'100vh'}
         align={'center'}
         justify={'center'}
-        bg={useColorModeValue('gray.50', 'gray.800')}>
+        backgroundImage={"url('winbg.png')"}
+        >
         <Stack
           spacing={4}
           w={'full'}
@@ -89,12 +90,12 @@ import {
           p={6}
           my={12}>
           <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-            Redeem your code now
+            Redeem code
           </Heading>
           <Text
             fontSize={{ base: 'sm', sm: 'md' }}
             color={useColorModeValue('gray.800', 'gray.400')}>
-            Enter the code you have below to claim your airtime. This field is case sensitive!
+            Enter the code you have below to claim your airtime.
           </Text>
           <FormControl id="number">
             <Input

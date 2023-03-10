@@ -69,6 +69,7 @@ export default function AdminLayout({children}) {
 
 
 const SidebarContent = ({ onClose, ...rest }) => {
+  const {user} = useUser()
   return (
     <Box
       transition="3s ease"
@@ -90,78 +91,8 @@ const SidebarContent = ({ onClose, ...rest }) => {
           {link.name}
         </NavItem>
       ))}
-    </Box>
-  );
-};
-
-
-const NavItem = ({ icon, link, children, ...rest }) => {
-  return (
-    <Link href={link} style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
-      <Flex
-        align="center"
-        p="4"
-        mx="4"
-        borderRadius="lg"
-        role="group"
-        cursor="pointer"
-        _hover={{
-          bg: 'cyan.400',
-          color: 'white',
-        }}
-        {...rest}>
-        {icon && (
-          <Icon
-            mr="4"
-            fontSize="16"
-            _groupHover={{
-              color: 'white',
-            }}
-            as={icon}
-          />
-        )}
-        {children}
-      </Flex>
-    </Link>
-  );
-};
-
-const MobileNav = ({ onOpen, ...rest }) => {
-    const {user} = useUser()
-  return (
-    <Flex
-      ml={{ base: 0, md: 60 }}
-      px={{ base: 4, md: 4 }}
-      height="20"
-      alignItems="center"
-      bg={useColorModeValue('white', 'gray.900')}
-      borderBottomWidth="1px"
-      borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
-      justifyContent={{ base: 'space-between', md: 'flex-end' }}
-      {...rest}>
-      <IconButton
-        display={{ base: 'flex', md: 'none' }}
-        onClick={onOpen}
-        variant="outline"
-        aria-label="open menu"
-        icon={<FiMenu />}
-      />
-
-      <Text
-        display={{ base: 'flex', md: 'none' }}
-        fontSize="2xl"
-        fontFamily="monospace"
-        fontWeight="bold">
-          <Image src='/mplogo.svg' />
-      </Text>
-
-      <HStack spacing={{ base: '0', md: '6' }}>
-        <IconButton
-          size="lg"
-          variant="ghost"
-          aria-label="open menu"
-          icon={<FiBell />}
-        />
+      
+      <HStack spacing={{ base: '0', md: '6' }} bottom={5} pos={'fixed'} pl={3}>
         <Flex alignItems={'center'}>
           <Menu>
             <MenuButton
@@ -200,6 +131,72 @@ const MobileNav = ({ onOpen, ...rest }) => {
           </Menu>
         </Flex>
       </HStack>
+    </Box>
+  );
+};
+
+
+const NavItem = ({ icon, link, children, ...rest }) => {
+  return (
+    <Link href={link} style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
+      <Flex
+      fontWeight={500}
+      color={'blackAlpha.700'}
+        align="center"
+        p="4"
+        mx="4"
+        borderRadius="lg"
+        role="group"
+        cursor="pointer"
+        _hover={{
+          bg: 'blackAlpha.100',
+          color: 'black',
+        }}
+        {...rest}>
+        {icon && (
+          <Icon
+            mr="4"
+            fontSize="16"
+            _groupHover={{
+              color: 'black',
+            }}
+            as={icon}
+          />
+        )}
+        {children}
+      </Flex>
+    </Link>
+  );
+};
+
+const MobileNav = ({ onOpen, ...rest }) => {
+  return (
+    <Flex
+      ml={{ base: 0, md: 60 }}
+      px={{ base: 4, md: 4 }}
+      height={{base:'20', md:'10'}}
+      alignItems="center"
+      bg={useColorModeValue('white', 'gray.900')}
+      borderBottomWidth={{base:'1px', md:'0'}}
+      borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
+      justifyContent={{ base: 'space-between', md: 'flex-end' }}
+      {...rest}>
+      <IconButton
+        display={{ base: 'flex', md: 'none' }}
+        onClick={onOpen}
+        variant="outline"
+        aria-label="open menu"
+        icon={<FiMenu />}
+      />
+
+      <Text
+        display={{ base: 'flex', md: 'none' }}
+        fontSize="2xl"
+        fontWeight="bold">
+          <Image src='/mplogo.svg' />
+      </Text>
+
+      
     </Flex>
   );
 };

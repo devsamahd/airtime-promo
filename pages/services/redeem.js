@@ -78,7 +78,7 @@ import {
         minH={'100vh'}
         align={'center'}
         justify={'center'}
-        backgroundImage={"url('/winsbg.png')"}
+        backgroundImage={{base:"url('/winsbgmob.png')",md:"url('/winsbg.png')"}}
         backgroundSize={'cover'}
         >
         <Stack

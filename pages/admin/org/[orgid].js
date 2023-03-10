@@ -25,7 +25,7 @@ const SingleOrg = ({resp, orgs}) => {
 }
 export default withPageAuthRequired(SingleOrg) 
 
-export const getStaticProps = async({params})=>{
+export const getServerSideProps = async({params})=>{
     const {orgid} = params
     const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode/${orgid}`)
     const resp = await data.json()
@@ -37,13 +37,3 @@ export const getStaticProps = async({params})=>{
       props:{resp, orgs}
   }
 }
-  
-  export const getStaticPaths = async () => {
-      const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/org`)
-      const res = await data.json()
-      const paths =await res.map(org => ({params:{orgid:(org._id).toString()}}))
-      return {
-          paths,
-          fallback: false
-      }
-  }

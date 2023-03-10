@@ -8,10 +8,12 @@ import {
     Button,
     Image
   } from '@chakra-ui/react';
+import Scroll from './Scroll';
   
   export default function Hero() {
     return (
-      <Container maxW={'6xl'} bg={'#FFF7EB'}>
+      <Box bg={'#FFF7EB'}>
+      <Container maxW={'6xl'}>
         <Stack
           align={'center'}
           spacing={{ base: 8, md: 0 }}
@@ -34,8 +36,7 @@ import {
               </Text>
             </Heading>
             <Text color={'gray.600'} w={'90%'}>
-            We're not your typical marketing company. We're marketing/ We're not your typical marketing company. We're marketing professionals.
-            </Text>
+            MarketPro is a premium airtime & data vending solution built for BRAND-LOYALTY-REWARD for FMCG brands doing business in Nigeria.            </Text>
             <Stack
               spacing={{ base: 4, sm: 6 }}
               direction={{ base: 'column', sm: 'row' }}>
@@ -69,6 +70,8 @@ import {
           </Flex>
         </Stack>
       </Container>
+      <Scroll /><br /><br />
+      </Box>
     );
   }
   

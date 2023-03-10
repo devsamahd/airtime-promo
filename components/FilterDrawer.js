@@ -55,9 +55,8 @@ function FilterDrawer({status, type, setType, setStatus}) {
   
             <DrawerFooter>
               <Button variant='outline' mr={3} onClick={onClose}>
-                Cancel
+                close
               </Button>
-              <Button colorScheme='blue'>Save</Button>
             </DrawerFooter>
           </DrawerContent>
         </Drawer>

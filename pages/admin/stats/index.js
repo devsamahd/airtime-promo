@@ -3,8 +3,6 @@ import { withPageAuthRequired } from '@auth0/nextjs-auth0/client'
 import OrgCard from '@/components/orgCard'
 import AdminLayout from '@/components/AdminLayout'
 import { FormControl, Grid, GridItem, Input, Link } from '@chakra-ui/react'
-import AddOrg from '@/components/AddOrg'
-
 
 const Org = ({orgs}) => {
     const [orgsData, setOrgsData] = useState(orgs)
@@ -21,7 +19,6 @@ const Org = ({orgs}) => {
               {(orgsData.filter(org => (((org.orgName).toLowerCase()).includes(search.toLowerCase())))).map((org, key)=> (
                   <Link href={`/admin/stats/${org._id}`}><GridItem><OrgCard org={org} key={key} /></GridItem></Link>
               ))}
-              <AddOrg setOrg={setOrgsData} />
           
       </Grid>
     </AdminLayout>

@@ -3,13 +3,13 @@ import { Box, Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalClos
 import moment from 'moment'
 import { useState } from 'react'
 import { FaPlus } from 'react-icons/fa'
-import CsvDownload from 'react-json-to-csv'
 import Swal from 'sweetalert2'
+import Export from './export'
 
 export const fd = (date) => {
     return moment(date).format('YYYY-MM-DD HH:mm:ss')
   }
-const Codes =({res, setRes, resp, orgid, orgname}) => {
+const Codes =({res, setRes, resp, orgid, orgname, pg, tp, st}) => {
   
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [type, setType] = useState(null)
@@ -55,15 +55,11 @@ const Codes =({res, setRes, resp, orgid, orgname}) => {
     }
     
   }
-  const header = ['S/N', 'Code', 'Value', 'Status', 'Created At', 'Redeemed At', 'Redeemed By ']
-  const exportable = res.map((cor, key)=> {return {sn: key+1, code:cor.code, value:cor.value, used:cor.usable ? 'valid' : 'used', createdAt:fd(cor.createdAt), redeemedAt: !cor.used ? '-' : fd(cor.used.createdAt), redeemedBy: cor.used ? cor.used.number : '-'}})
-
-  return (
+ return (
     <>
-
-      <Box onClick={onOpen} pos={'fixed'} bottom={'90px'} right={'60px'} fontSize={30} borderRadius={'50%'} p={2} bg={'green.600'} color="white" _hover={{bg: 'green.600'}}><FaPlus /></Box>
-      <Box pos={'fixed'} bottom={'30px'} right={'60px'} borderRadius={10} p={3} bg={'green.600'} color="white" _hover={{bg: 'green.600'}}><CsvDownload data={exportable} headers={header} delimiter="," filename={orgname}/></Box>
-
+      <Export orgname={orgname} type={tp} status={st} orgid={orgid} />
+      <Box onClick={onOpen} pos={'fixed'} bottom={'30px'} right={'60px'} fontSize={30} borderRadius={'50%'} p={2} bg={'green.400'} color="white" _hover={{bg: 'green.600'}}><FaPlus /></Box>
+      
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -117,7 +113,7 @@ const Codes =({res, setRes, resp, orgid, orgname}) => {
           <Skeleton height='50px' /><br />
           <Skeleton height='50px' />
         </Stack>:
-        <CustomTable tvalue={res.reverse()} resp={resp.filter(res => res.orgId === orgid)}
+        <CustomTable pg={pg} tvalue={res.reverse()} resp={resp.filter(res => res.orgId === orgid)}
         />
           }
     </>

@@ -23,8 +23,7 @@ const EditOrg = ({ orgid, setOrg }) => {
         body:JSON.stringify({orgName: orgname, orgId: orgid})
       })
       const res = await gen.json()
-      console.log(res)
-      await setOrg(res)
+      await setOrg(res.orgName)
       onClose()
       Swal.fire({
         title: "Success",

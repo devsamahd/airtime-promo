@@ -13,6 +13,7 @@ import {
     FormLabel,
   } from '@chakra-ui/react'
 import { useRef } from 'react'
+import { FaFilter } from 'react-icons/fa'
 
 function FilterDrawer({status, type, setType, setStatus}) {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -21,7 +22,7 @@ function FilterDrawer({status, type, setType, setStatus}) {
     return (
       <>
         <Button ref={btnRef} colorScheme='green' onClick={onOpen}>
-          Filter
+          <FaFilter />
         </Button>
         <Drawer
           isOpen={isOpen}

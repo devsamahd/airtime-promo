@@ -3,23 +3,97 @@ import Codes from "@/components/Codes"
 import FilterDrawer from "@/components/FilterDrawer"
 import EditOrg from "@/components/Settings"
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client"
-import { Box, Heading, Text } from "@chakra-ui/react"
-import { useState } from "react"
+import { Box, Center, Heading, Input, Spinner } from "@chakra-ui/react"
+import { useState, useEffect } from "react"
 
-const SingleOrg = ({resp, orgs}) => {
-  const [org, setOrg] = useState(orgs)
+const SingleOrg = ({orgid, orgN}) => {
+  const [orgName, setOrgName] = useState(orgN)
   const [type, setType] = useState('')
   const [status, setStatus] = useState('')
-  const [res, setRes] = useState(resp)
+  const [res, setRes] = useState([])
+  const [loading,setLoading] = useState(false)
+  const [page, setPage] = useState([0,10])
+  const [pn, setPn] = useState(1)
+  const [pages, setPages] = useState(0) 
 
-  const actual = res.filter(res => (res.type).includes(type) && ((res.usable).toString()).includes(status.toString()))
+  
+
+  const increment = () => {
+    if(page[0]+10 >= pages*10){
+        setPage([(pages*10)-10, 10])
+      }else{
+        setPn(prev => prev+1)
+        setPage(prev => [parseInt(prev[0])+10, parseInt(prev[1])])
+      }
+    
+  }
+
+  
+  const decrement = () => {
+    if(page[0] <= 0){
+        setPage([0, 10])
+      }else{
+        setPn(prev => prev-1)
+        setPage(prev => [parseInt(prev[0])-10, parseInt(prev[1])])
+      }
+    
+  }
+
+  
+
+  const setcrement = (pager) => {
+    setPn(pager)
+    if(pager>=pages)
+    {
+      setPn(prev=>prev)
+    }
+    else{
+      setPn(pager)
+      setPage([pager-1 >=0?(pager-1)*10:0, 10])
+  }
+  }
+  useEffect(()=>{
+    (async()=>{
+      try{
+        setLoading(true)
+        const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode/${orgid}/?skip=${page[0]}&limit=${page[1]}&type=${type?type:''}&status=${status?status:''}`)
+        const resp = await data.json()
+        setPages(Math.round(parseInt(resp.count)/10))
+        setRes(resp.resp)
+      }catch(e){
+        console.log(e)
+      }finally{
+        setLoading(false)
+      }
+    
+    })()
+    
+  },[page, type, status])
+
+  
+  
 
   return (
     <AdminLayout>
-        <Heading size={'lg'} display={'flex'} justifyContent={'space-between'}> <Box display={'flex'}>{org.orgName} <Box fontSize={'xl'}><EditOrg orgid={org._id} setOrg={setOrg} /></Box></Box><Box fontSize={'lg'}><FilterDrawer setType={setType} setStatus={setStatus} status={status} type={type} /></Box></Heading>
-        <br /><br />
-        <Text>Created:</Text>
-        <Codes res={actual} orgname={org.orgName} setRes={setRes} resp={resp} orgid={org._id} />
+        <Heading size={'lg'} display={'flex'} justifyContent={'space-between'}> <Box display={'flex'}>{orgName} <Box fontSize={'xl'}><EditOrg orgid={orgid} setOrg={setOrgName} /></Box></Box><Box fontSize={'lg'}><FilterDrawer setType={setType} setStatus={setStatus} status={status} type={type} /></Box></Heading>
+        <br /><br /><br /><br />
+        {loading ? 
+        <Center>
+        <Spinner
+        thickness='4px'
+        speed='0.65s'
+        emptyColor='gray.200'
+        color='blue.500'
+        size='xl'
+      /></Center>
+        :<>
+          <Codes pg={page[0]} res={res} orgname={orgName} setRes={setRes} resp={res} orgid={orgid} tp={type} st={status} /><br /><br /><br />
+          <Box display={'flex'} justifyContent={'space-evenly'}>
+            <Input width={20} type={'submit'} onClick={decrement} disabled={pn > 1 ? false : true}  value="Prev" />
+            <Box>Page <Input type={'number'} onChange={e=>setcrement(e.target.value)} width="45px" value={pn} border="0" /> of {pages}</Box>
+            <Input bg={"green.500"} color="white" width={20} type={'submit'} onClick={increment} disabled={pn < pages? false : true}  value="Next" />
+          </Box>
+        </>}
     </AdminLayout>
   )
 }
@@ -27,13 +101,11 @@ export default withPageAuthRequired(SingleOrg)
 
 export const getServerSideProps = async({params})=>{
     const {orgid} = params
-    const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode/${orgid}`)
-    const resp = await data.json()
-    
     const orgreq = await fetch(`${process.env.NEXT_PUBLIC_BE}/org/${orgid}`)
     const orgs = await orgreq.json()
-
+    const orgN = orgs.orgName
+    const codeCount = orgs.codeCount
     return {
-      props:{resp, orgs}
+      props:{orgid, orgN, codeCount}
   }
 }

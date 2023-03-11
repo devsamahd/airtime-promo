@@ -58,7 +58,7 @@ const SingleOrg = ({orgid}) => {
  },[])
   return (
     <AdminLayout>
-        {orgs && <Center><Heading size={"lg"}>{orgs.orgName}</Heading>Stats</Center>}
+        {orgs && <Center><Heading size={"lg"}>{orgs.orgName}</Heading></Center>}
         {!loading?<Box as="section" py={{ base: '4', md: '8' }}>
             
                 <SimpleGrid columns={{ base: 1, md: 3 }} gap={{ base: '5', md: '6' }}>

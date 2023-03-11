@@ -25,7 +25,6 @@ export const Stat = (props) => {
   }
 
 const SingleOrg = ({orgs}) => {
- console.log(orgs)
  const stats = [
     {label:'Total Codes', value:orgs.codeCount},
     {label:'Total Unused Codes', value:orgs.unusedCode},

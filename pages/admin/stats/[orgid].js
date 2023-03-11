@@ -26,18 +26,9 @@ export const Stat = (props) => {
   }
 
 const SingleOrg = ({orgid}) => {
- const stats = [
-    {label:'Total Codes', value:orgs.codeCount},
-    {label:'Total Unused Codes', value:orgs.codeCount-orgs.usedCode},
-    {label:'Total used Codes', value:orgs.usedCode},
-    {label:'Total Raffle Codes', value:orgs.raffleCode},
-    {label:'Total used Raffle Codes', value:(orgs.raffleCode-orgs.unusedRaffleCode)},
-    {label:'Total unused Raffle Codes', value:orgs.unusedRaffleCode},
-    {label:'Total Airtime Codes', value:orgs.airtimeCode},
-    {label:'Total used Airtime Codes', value:orgs.airtimeCode-orgs.unusedAirtimeCode},
-    {label:'Total unused Airtime Codes', value:orgs.unusedAirtimeCode},
- ]
- const [orgs, setOrgs] = useState([])
+  
+ const [stats, setStats] = useState({})
+
  const [loading, setLoading] = useState(false)
 
  useEffect(()=>{
@@ -46,7 +37,15 @@ const SingleOrg = ({orgid}) => {
         (async()=>{
             const orgreq = await fetch(`${process.env.NEXT_PUBLIC_BE}/org/${orgid}`)
             const org = await orgreq.json()
-            setOrgs(org)
+            setStats({label:'Total Codes', value:org.codeCount},
+            {label:'Total Unused Codes', value:org.codeCount-org.usedCode},
+            {label:'Total used Codes', value:org.usedCode},
+            {label:'Total Raffle Codes', value:org.raffleCode},
+            {label:'Total used Raffle Codes', value:(org.raffleCode-org.unusedRaffleCode)},
+            {label:'Total unused Raffle Codes', value:org.unusedRaffleCode},
+            {label:'Total Airtime Codes', value:org.airtimeCode},
+            {label:'Total used Airtime Codes', value:org.airtimeCode-org.unusedAirtimeCode},
+            {label:'Total unused Airtime Codes', value:org.unusedAirtimeCode})
         })()
         
     }catch(e){

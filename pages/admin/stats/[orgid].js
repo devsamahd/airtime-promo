@@ -27,7 +27,7 @@ export const Stat = (props) => {
 const SingleOrg = ({orgs}) => {
  const stats = [
     {label:'Total Codes', value:orgs.codeCount},
-    {label:'Total Unused Codes', value:orgs.unusedCode},
+    {label:'Total Unused Codes', value:orgs.codeCount-orgs.usedCode},
     {label:'Total used Codes', value:orgs.usedCode},
     {label:'Total Raffle Codes', value:orgs.raffleCode},
     {label:'Total used Raffle Codes', value:(orgs.raffleCode-orgs.unusedRaffleCode)},

@@ -56,7 +56,7 @@ const SingleOrg = ({orgid, orgN}) => {
     (async()=>{
       try{
         setLoading(true)
-        const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode/${orgid}/?skip=${page[0]}&limit=${page[1]}&type=${type?type:''}&status=${status?status:''}`)
+        const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode/${orgid}/?skip=${page[0]}&limit=${10}&type=${type?type:''}&status=${status?status:''}`)
         const resp = await data.json()
         setPages(Math.round(parseInt(resp.count)/10))
         setRes(resp.resp)

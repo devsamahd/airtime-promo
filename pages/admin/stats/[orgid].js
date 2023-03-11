@@ -33,8 +33,8 @@ const SingleOrg = ({orgs}) => {
     {label:'Total used Raffle Codes', value:(orgs.raffleCode-orgs.unusedRaffleCode)},
     {label:'Total unused Raffle Codes', value:orgs.unusedRaffleCode},
     {label:'Total unused Airtime Codes', value:orgs.airtimeCode},
-    {label:'Total used Raffle Codes', value:orgs.airtimeCode-orgs.unusedAirtimeCode},
-    {label:'Total unused Raffle Codes', value:orgs.unusedAirtimeCode},
+    {label:'Total used Airtime Codes', value:orgs.airtimeCode-orgs.unusedAirtimeCode},
+    {label:'Total unused Airtime Codes', value:orgs.unusedAirtimeCode},
  ]
   return (
     <AdminLayout>

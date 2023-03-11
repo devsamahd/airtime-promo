@@ -60,7 +60,6 @@ const SingleOrg = ({orgid}) => {
     <AdminLayout>
         {orgs && <Center><Heading size={"lg"}>{orgs.orgName}</Heading></Center>}
         {!loading?<Box as="section" py={{ base: '4', md: '8' }}>
-            
                 <SimpleGrid columns={{ base: 1, md: 3 }} gap={{ base: '5', md: '6' }}>
                     {stats.map(({ label, value }) => (
                     <Stat key={label} label={label} value={value} />

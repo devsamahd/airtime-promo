@@ -1,6 +1,7 @@
 import AdminLayout from "@/components/AdminLayout"
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client"
-import { Center, Heading, Box, SimpleGrid, Stack, Text } from "@chakra-ui/react"
+import { Center, Heading, Box, SimpleGrid, Stack, Text, Spinner } from "@chakra-ui/react"
+import { useEffect, useState } from "react"
 
 export const Stat = (props) => {
     const { label, value, ...boxProps } = props
@@ -24,7 +25,7 @@ export const Stat = (props) => {
     )
   }
 
-const SingleOrg = ({orgs}) => {
+const SingleOrg = ({orgid}) => {
  const stats = [
     {label:'Total Codes', value:orgs.codeCount},
     {label:'Total Unused Codes', value:orgs.codeCount-orgs.usedCode},
@@ -36,17 +37,35 @@ const SingleOrg = ({orgs}) => {
     {label:'Total used Airtime Codes', value:orgs.airtimeCode-orgs.unusedAirtimeCode},
     {label:'Total unused Airtime Codes', value:orgs.unusedAirtimeCode},
  ]
+ const [orgs, setOrgs] = useState([])
+ const [loading, setLoading] = useState(false)
+
+ useEffect(()=>{
+    setLoading(true)
+    try{
+        (async()=>{
+            const orgreq = await fetch(`${process.env.NEXT_PUBLIC_BE}/org/${orgid}`)
+            const org = await orgreq.json()
+            setOrgs(org)
+        })()
+        
+    }catch(e){
+        console.log(e)
+    }finally{
+        setLoading(false)
+    }
+ },[])
   return (
     <AdminLayout>
         <Center><Heading size={"lg"}>{orgs.orgName}</Heading>Stats</Center>
-        <Box as="section" py={{ base: '4', md: '8' }}>
+        {!loading?<Box as="section" py={{ base: '4', md: '8' }}>
             
                 <SimpleGrid columns={{ base: 1, md: 3 }} gap={{ base: '5', md: '6' }}>
                     {stats.map(({ label, value }) => (
                     <Stat key={label} label={label} value={value} />
                     ))}
                 </SimpleGrid>
-        </Box>
+        </Box>:<Center><Spinner /></Center>}
     </AdminLayout>
   )
 }
@@ -54,9 +73,8 @@ export default withPageAuthRequired(SingleOrg)
 
 export const getServerSideProps = async({params})=>{
     const {orgid} = params
-    const orgreq = await fetch(`${process.env.NEXT_PUBLIC_BE}/org/${orgid}`)
-    const orgs = await orgreq.json()
+    
     return {
-      props:{orgs}
+      props:{orgid}
   }
 }

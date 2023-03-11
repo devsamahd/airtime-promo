@@ -27,7 +27,6 @@ import {
   FiCompass,
   FiSettings,
   FiMenu,
-  FiBell,
   FiChevronDown,
 } from 'react-icons/fi';
 
@@ -73,7 +72,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
   return (
     <Box
       transition="3s ease"
-      bg={useColorModeValue('white', 'gray.900')}
+      bg={useColorModeValue('blue.400')}
       borderRight="1px"
       borderRightColor={useColorModeValue('gray.200', 'gray.700')}
       w={{ base: 'full', md: 60 }}
@@ -82,7 +81,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
       {...rest}>
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          <Image src='/mplogo.svg' />
+          <Image src='/mplogowh.svg' />
         </Text>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
@@ -109,14 +108,15 @@ const SidebarContent = ({ onClose, ...rest }) => {
                 <VStack
                   display={{ base: 'none', md: 'flex' }}
                   alignItems="flex-start"
+                  color={"white"}
                   spacing="1px"
                   ml="2">
                   <Text fontSize="sm">{user.name}</Text>
-                  <Text fontSize="xs" color="gray.600">
+                  <Text fontSize="xs" color="gray.300">
                     Admin
                   </Text>
                 </VStack>
-                <Box display={{ base: 'none', md: 'flex' }}>
+                <Box display={{ base: 'none', md: 'flex' }} color={"white"}>
                   <FiChevronDown />
                 </Box>
               </HStack>
@@ -141,7 +141,7 @@ const NavItem = ({ icon, link, children, ...rest }) => {
     <Link href={link} style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
       <Flex
       fontWeight={500}
-      color={'blackAlpha.700'}
+      color={'whiteAlpha.800'}
         align="center"
         p="4"
         mx="4"
@@ -149,8 +149,8 @@ const NavItem = ({ icon, link, children, ...rest }) => {
         role="group"
         cursor="pointer"
         _hover={{
-          bg: 'blackAlpha.100',
-          color: 'black',
+          bg: 'blue.500',
+          color: 'white',
         }}
         {...rest}>
         {icon && (
@@ -158,7 +158,7 @@ const NavItem = ({ icon, link, children, ...rest }) => {
             mr="4"
             fontSize="16"
             _groupHover={{
-              color: 'black',
+              color: 'white',
             }}
             as={icon}
           />
@@ -193,7 +193,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
         display={{ base: 'flex', md: 'none' }}
         fontSize="2xl"
         fontWeight="bold">
-          <Image src='/mplogo.svg' />
+          <Image src='/mplogowh.svg' />
       </Text>
 
       

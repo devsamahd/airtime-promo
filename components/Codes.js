@@ -58,7 +58,7 @@ const Codes =({res, setRes, resp, orgid, orgname, pg, tp, st}) => {
  return (
     <>
       <Export orgname={orgname} type={tp} status={st} orgid={orgid} />
-      <Box onClick={onOpen} pos={'fixed'} bottom={'30px'} right={'60px'} fontSize={30} borderRadius={'50%'} p={2} bg={'green.400'} color="white" _hover={{bg: 'green.600'}}><FaPlus /></Box>
+      <Box onClick={onOpen} pos={'fixed'} bottom={'30px'} right={'60px'} fontSize={30} borderRadius={'50%'} p={2} bg={'blue.400'} color="white" _hover={{bg: 'blue.600'}}><FaPlus /></Box>
       
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

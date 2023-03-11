@@ -4,7 +4,7 @@ import { fd } from './Codes'
 const CustomTable = ({tvalue, pg }) => {
   return (
     <TableContainer>
-        <Table>
+        <Table variant='striped' colorScheme='blue'>
             <Thead>
             <Tr>
                 <Th>S/N</Th>

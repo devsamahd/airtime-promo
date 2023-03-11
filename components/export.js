@@ -39,7 +39,7 @@ export default function Export({orgid, orgname, status, type}) {
   
     return (
       <>
-        <Box pos={'fixed'} bottom={'90px'} right={'60px'} borderRadius={10} p={3} bg={'green.400'} color="white" _hover={{bg: 'green.600'}} onClick={exportit}><FaFileExport /></Box>
+        <Box pos={'fixed'} bottom={'90px'} right={'60px'} borderRadius={50} p={4} bg={'green.700'} color="white" _hover={{bg: 'green.800'}} onClick={exportit}><FaFileExport /></Box>
         
   
         <Modal
@@ -55,7 +55,7 @@ export default function Export({orgid, orgname, status, type}) {
             {loading && <><Spinner /><i> Preparing document...</i></>}
             </ModalBody>
             <ModalFooter>
-                {!loading && <Box bg={"green.500"} color={"white"} p={2} borderRadius={5} mr={3}><CsvDownload data={exportable} headers={header} delimiter="," filename={orgname}/></Box>}
+                {!loading && <Box bg={"blue.500"} color={"white"} p={2} borderRadius={5} mr={3}><CsvDownload data={exportable} headers={header} delimiter="," filename={orgname}/></Box>}
                 <Button onClick={onClose}>Cancel</Button>
             </ModalFooter>
           </ModalContent>

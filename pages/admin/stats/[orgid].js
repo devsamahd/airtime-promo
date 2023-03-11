@@ -27,7 +27,7 @@ export const Stat = (props) => {
 
 const SingleOrg = ({orgid}) => {
   
- const [stats, setStats] = useState({})
+ const [stats, setStats] = useState([])
  const [orgs, setOrgs] = useState([])
 
  const [loading, setLoading] = useState(false)
@@ -39,7 +39,7 @@ const SingleOrg = ({orgid}) => {
             const orgreq = await fetch(`${process.env.NEXT_PUBLIC_BE}/org/${orgid}`)
             const org = await orgreq.json()
             setOrgs(org)
-            setStats({label:'Total Codes', value:org.codeCount},
+            setStats([{label:'Total Codes', value:org.codeCount},
             {label:'Total Unused Codes', value:org.codeCount-org.usedCode},
             {label:'Total used Codes', value:org.usedCode},
             {label:'Total Raffle Codes', value:org.raffleCode},
@@ -47,7 +47,7 @@ const SingleOrg = ({orgid}) => {
             {label:'Total unused Raffle Codes', value:org.unusedRaffleCode},
             {label:'Total Airtime Codes', value:org.airtimeCode},
             {label:'Total used Airtime Codes', value:org.airtimeCode-org.unusedAirtimeCode},
-            {label:'Total unused Airtime Codes', value:org.unusedAirtimeCode})
+            {label:'Total unused Airtime Codes', value:org.unusedAirtimeCode}])
         })()
         
     }catch(e){

@@ -51,7 +51,7 @@ const AddOrg = ({setOrg}) => {
       <Box onClick={onOpen} ref={finalRef} maxW='sm' w={'md'} borderWidth='1px' borderRadius='lg' overflow='hidden' bg={'blue.50'} color={'gray.400'} _hover={{color:'gray.600'}}>
         <Center>
             <Box p='6' >
-                Add New Organization
+              Add New Organization 
             </Box>
         </Center>
       </Box>

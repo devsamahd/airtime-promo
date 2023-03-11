@@ -28,6 +28,7 @@ export const Stat = (props) => {
 const SingleOrg = ({orgid}) => {
   
  const [stats, setStats] = useState({})
+ const [orgs, setOrgs] = useState([])
 
  const [loading, setLoading] = useState(false)
 
@@ -37,6 +38,7 @@ const SingleOrg = ({orgid}) => {
         (async()=>{
             const orgreq = await fetch(`${process.env.NEXT_PUBLIC_BE}/org/${orgid}`)
             const org = await orgreq.json()
+            setOrgs(org)
             setStats({label:'Total Codes', value:org.codeCount},
             {label:'Total Unused Codes', value:org.codeCount-org.usedCode},
             {label:'Total used Codes', value:org.usedCode},

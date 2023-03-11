@@ -23,7 +23,7 @@ const SingleOrg = ({orgid, orgN}) => {
         setPage([(pages*10)-10, 10])
       }else{
         setPn(prev => prev+1)
-        setPage(prev => [parseInt(prev[0])+10, parseInt(prev[1])])
+        setPage(prev => [parseInt(prev[0])+10, 10])
       }
     
   }
@@ -34,7 +34,7 @@ const SingleOrg = ({orgid, orgN}) => {
         setPage([0, 10])
       }else{
         setPn(prev => prev-1)
-        setPage(prev => [parseInt(prev[0])-10, parseInt(prev[1])])
+        setPage(prev => [parseInt(prev[0])-10, 10])
       }
     
   }

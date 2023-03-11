@@ -74,9 +74,9 @@ const AddOrg = ({setOrg}) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={addOrg}>
+            {!loading && <Button colorScheme='blue' mr={3} onClick={addOrg}>
               Create
-            </Button>
+            </Button>}
             <Button onClick={onClose}>Cancel</Button>
           </ModalFooter>
         </ModalContent>

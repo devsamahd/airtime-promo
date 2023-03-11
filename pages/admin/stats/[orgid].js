@@ -59,13 +59,7 @@ const SingleOrg = ({orgid}) => {
   return (
     <AdminLayout>
         {orgs && <Center><Heading size={"lg"}>{orgs.orgName}</Heading></Center>}
-        {!loading?<Box as="section" py={{ base: '4', md: '8' }}>
-                <SimpleGrid columns={{ base: 1, md: 3 }} gap={{ base: '5', md: '6' }}>
-                    {stats.map(({ label, value }) => (
-                    <Stat key={label} label={label} value={value} />
-                    ))}
-                </SimpleGrid>
-        </Box>:<Center>
+        {loading && <Center>
         <Spinner
         thickness='4px'
         speed='0.65s'
@@ -73,6 +67,13 @@ const SingleOrg = ({orgid}) => {
         color='blue.500'
         size='xl'
       /></Center>}
+        {!loading && <Box as="section" py={{ base: '4', md: '8' }}>
+                <SimpleGrid columns={{ base: 1, md: 3 }} gap={{ base: '5', md: '6' }}>
+                    {stats.map(({ label, value }) => (
+                    <Stat key={label} label={label} value={value} />
+                    ))}
+                </SimpleGrid>
+        </Box>}
     </AdminLayout>
   )
 }

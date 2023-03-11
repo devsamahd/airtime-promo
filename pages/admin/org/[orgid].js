@@ -87,7 +87,7 @@ const SingleOrg = ({orgid, orgN}) => {
         size='xl'
       /></Center>
         :<>
-          <Codes pg={page[0]} res={res} orgname={orgName} setRes={setRes} resp={res} orgid={orgid} tp={type} st={status} /><br /><br /><br />
+          <Codes pg={page[0]} res={res} orgname={orgName} setPage={setPage} resp={res} orgid={orgid} tp={type} st={status} /><br /><br /><br />
           <Box display={'flex'} justifyContent={'space-evenly'}>
             <Input width={20} type={'submit'} onClick={decrement} disabled={pn > 1 ? false : true}  value="Prev" />
             <Box>Page <Input type={'number'} onChange={e=>setcrement(e.target.value)} width="45px" value={pn} border="0" /> of {pages}</Box>

@@ -9,7 +9,7 @@ import Export from './export'
 export const fd = (date) => {
     return moment(date).format('YYYY-MM-DD HH:mm:ss')
   }
-const Codes =({res, setRes, resp, orgid, orgname, pg, tp, st}) => {
+const Codes =({res, setPage, resp, orgid, orgname, pg, tp, st}) => {
   
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [type, setType] = useState(null)
@@ -31,9 +31,7 @@ const Codes =({res, setRes, resp, orgid, orgname, pg, tp, st}) => {
       })
       onClose()
       const res1 = await gen.json()
-      const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode`)
-      const res =await data.json()
-      setRes(res.filter(res => res.orgId === orgid))
+      setPage([0,10])
       
       Swal.fire({
         title: "Success",

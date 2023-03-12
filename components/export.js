@@ -26,28 +26,28 @@ export default function Export({orgid, orgname, status, type, codeCount}) {
         onOpen()
         setLoading(true)
         try{
-          if(status && type){
+          if(Boolean(status) && Boolean(type)){
             for (let i = 0; i < codeCount; i++) {
               const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode/${orgid}/?skip=${i}&limit=100&status=${status}&type=${type}`)
               const resp = await data.json()
-              const newres = resp.resp.map((cor, key)=> {return {sn: key+1, code:cor.code, value:cor.value, used:cor.usable ? 'valid' : 'used', createdAt:fd(cor.createdAt), redeemedAt: !cor.used ? '-' : fd(cor.used.createdAt), redeemedBy: cor.used ? cor.used.number : '-'}})
+              const newres = resp.resp.map((cor, key)=> {return {sn: key+1+i, code:cor.code, value:cor.value, used:cor.usable ? 'valid' : 'used', createdAt:fd(cor.createdAt), redeemedAt: !cor.used ? '-' : fd(cor.used.createdAt), redeemedBy: cor.used ? cor.used.number : '-'}})
               setExportable(prev => [...prev, ...newres])
               i+=100
             }
 
-          }else if(status){
+          }else if(Boolean(status)){
             for (let i = 0; i < codeCount; i++) {
               const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode/${orgid}/?skip=${i}&limit=100&status=${status}`)
               const resp = await data.json()
-              const newres = resp.resp.map((cor, key)=> {return {sn: key+1, code:cor.code, value:cor.value, used:cor.usable ? 'valid' : 'used', createdAt:fd(cor.createdAt), redeemedAt: !cor.used ? '-' : fd(cor.used.createdAt), redeemedBy: cor.used ? cor.used.number : '-'}})
+              const newres = resp.resp.map((cor, key)=> {return {sn: key+1+i, code:cor.code, value:cor.value, used:cor.usable ? 'valid' : 'used', createdAt:fd(cor.createdAt), redeemedAt: !cor.used ? '-' : fd(cor.used.createdAt), redeemedBy: cor.used ? cor.used.number : '-'}})
               setExportable(prev => [...prev, ...newres])
               i+=100
             }
-          }else if(type){
+          }else if(Boolean(type)){
             for (let i = 0; i < codeCount; i++) {
               const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode/${orgid}/?skip=${i}&limit=100&type=${type}}`)
               const resp = await data.json()
-              const newres = resp.resp.map((cor, key)=> {return {sn: key+1, code:cor.code, value:cor.value, used:cor.usable ? 'valid' : 'used', createdAt:fd(cor.createdAt), redeemedAt: !cor.used ? '-' : fd(cor.used.createdAt), redeemedBy: cor.used ? cor.used.number : '-'}})
+              const newres = resp.resp.map((cor, key)=> {return {sn: key+1+i, code:cor.code, value:cor.value, used:cor.usable ? 'valid' : 'used', createdAt:fd(cor.createdAt), redeemedAt: !cor.used ? '-' : fd(cor.used.createdAt), redeemedBy: cor.used ? cor.used.number : '-'}})
               setExportable(prev => [...prev, ...newres])
               i+=100
             }
@@ -55,7 +55,7 @@ export default function Export({orgid, orgname, status, type, codeCount}) {
             for (let i = 0; i < codeCount; i++) {
               const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode/${orgid}/?skip=${i}&limit=100`)
               const resp = await data.json()
-              const newres = resp.resp.map((cor, key)=> {return {sn: key+1, code:cor.code, value:cor.value, used:cor.usable ? 'valid' : 'used', createdAt:fd(cor.createdAt), redeemedAt: !cor.used ? '-' : fd(cor.used.createdAt), redeemedBy: cor.used ? cor.used.number : '-'}})
+              const newres = resp.resp.map((cor, key)=> {return {sn: key+1+i, code:cor.code, value:cor.value, used:cor.usable ? 'valid' : 'used', createdAt:fd(cor.createdAt), redeemedAt: !cor.used ? '-' : fd(cor.used.createdAt), redeemedBy: cor.used ? cor.used.number : '-'}})
               setExportable(prev => [...prev, ...newres])
               i+=100
             }

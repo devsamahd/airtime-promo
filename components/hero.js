@@ -6,7 +6,8 @@ import {
     Heading,
     Text,
     Button,
-    Image
+    Image,
+    Link
   } from '@chakra-ui/react';
 import Scroll from './Scroll';
   
@@ -20,6 +21,12 @@ import Scroll from './Scroll';
           py={{ base: 14, md: 20 }}
           direction={{ base: 'column', md: 'row' }}>
           <Stack flex={1} spacing={{ base: 5, md: 10 }}>
+          <Stack
+              spacing={{ base: 4, sm: 6 }}
+              direction={{ base: 'column', sm: 'row' }}>
+                <Button border="1px solid black" bg={"white"} ml="10px" borderRadius={"50px"}>Contact Us</Button>
+                <Link href='/services/redeem'><Button border="1px solid black" bg={"blue.500"} color="white" ml="10px" borderRadius={"50px"}>Redeem Code</Button></Link>
+            </Stack>
             <Heading
               lineHeight={1}
               fontWeight={500}
@@ -37,11 +44,7 @@ import Scroll from './Scroll';
             </Heading>
             <Text color={'gray.600'} w={'90%'}>
             MarketPro is a premium airtime & data vending solution built for BRAND-LOYALTY-REWARD for FMCG brands doing business in Nigeria.            </Text>
-            <Stack
-              spacing={{ base: 4, sm: 6 }}
-              direction={{ base: 'column', sm: 'row' }}>
-                <Button border="1px solid black" bg={"white"} ml="10px" borderRadius={"50px"}>Contact Us</Button>
-            </Stack>
+            
           </Stack>
           <Flex
             flex={1}

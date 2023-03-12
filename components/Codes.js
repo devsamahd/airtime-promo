@@ -9,7 +9,7 @@ import Export from './export'
 export const fd = (date) => {
     return moment(date).format('YYYY-MM-DD HH:mm:ss')
   }
-const Codes =({res, setPage, resp, orgid, orgname, pg, tp, st}) => {
+const Codes =({res, setPage, codeCount, resp, orgid, orgname, pg, tp, st}) => {
   
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [type, setType] = useState(null)
@@ -55,7 +55,7 @@ const Codes =({res, setPage, resp, orgid, orgname, pg, tp, st}) => {
   }
  return (
     <>
-      <Export orgname={orgname} type={tp} status={st} orgid={orgid} />
+      <Export orgname={orgname} type={tp} status={st} codeCount={codeCount} orgid={orgid} />
       <Box onClick={onOpen} pos={'fixed'} bottom={'30px'} right={'60px'} fontSize={30} borderRadius={'50%'} p={2} bg={'blue.400'} color="white" _hover={{bg: 'blue.600'}}><FaPlus /></Box>
       
       <Modal isOpen={isOpen} onClose={onClose}>

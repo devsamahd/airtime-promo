@@ -10,7 +10,6 @@ import React from 'react'
 // Our clientele in the retail and consumer industry trust us to manage their promos, marketing campaigns and brand activations for market share acquisition, this translates to more sales.
 
 const index = () => {
-  console.log(process.env.AUTH0_SECRET)
   return (
     <>
     <Meta title={"MarketPro NG 💚"} />

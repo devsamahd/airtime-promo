@@ -21,27 +21,50 @@ export default function Export({orgid, orgname, status, type, codeCount}) {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const header = ['S/N', 'Code', 'Value', 'Status', 'Created At', 'Redeemed At', 'Redeemed By ']
     const [exportable,setExportable] = useState([])
-    const [current, setCurrent] = useState(0)
     
     const exportit = async() => {
         onOpen()
         setLoading(true)
         try{
+          if(status && type){
+            for (let i = 0; i < codeCount; i++) {
+              const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode/${orgid}/?skip=${i}&limit=100&status=${status}&type=${type}`)
+              const resp = await data.json()
+              const newres = resp.resp.map((cor, key)=> {return {sn: key+1, code:cor.code, value:cor.value, used:cor.usable ? 'valid' : 'used', createdAt:fd(cor.createdAt), redeemedAt: !cor.used ? '-' : fd(cor.used.createdAt), redeemedBy: cor.used ? cor.used.number : '-'}})
+              setExportable(prev => [...prev, ...newres])
+              i+=100
+            }
+
+          }else if(status){
+            for (let i = 0; i < codeCount; i++) {
+              const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode/${orgid}/?skip=${i}&limit=100&status=${status}`)
+              const resp = await data.json()
+              const newres = resp.resp.map((cor, key)=> {return {sn: key+1, code:cor.code, value:cor.value, used:cor.usable ? 'valid' : 'used', createdAt:fd(cor.createdAt), redeemedAt: !cor.used ? '-' : fd(cor.used.createdAt), redeemedBy: cor.used ? cor.used.number : '-'}})
+              setExportable(prev => [...prev, ...newres])
+              i+=100
+            }
+          }else if(type){
+            for (let i = 0; i < codeCount; i++) {
+              const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode/${orgid}/?skip=${i}&limit=100&type=${type}}`)
+              const resp = await data.json()
+              const newres = resp.resp.map((cor, key)=> {return {sn: key+1, code:cor.code, value:cor.value, used:cor.usable ? 'valid' : 'used', createdAt:fd(cor.createdAt), redeemedAt: !cor.used ? '-' : fd(cor.used.createdAt), redeemedBy: cor.used ? cor.used.number : '-'}})
+              setExportable(prev => [...prev, ...newres])
+              i+=100
+            }
+          }else{
             for (let i = 0; i < codeCount; i++) {
               const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode/${orgid}/?skip=${i}&limit=100`)
               const resp = await data.json()
-              console.log(resp)
-              const newres = resp.map((cor, key)=> {return {sn: key+1, code:cor.code, value:cor.value, used:cor.usable ? 'valid' : 'used', createdAt:fd(cor.createdAt), redeemedAt: !cor.used ? '-' : fd(cor.used.createdAt), redeemedBy: cor.used ? cor.used.number : '-'}})
-              
+              const newres = resp.resp.map((cor, key)=> {return {sn: key+1, code:cor.code, value:cor.value, used:cor.usable ? 'valid' : 'used', createdAt:fd(cor.createdAt), redeemedAt: !cor.used ? '-' : fd(cor.used.createdAt), redeemedBy: cor.used ? cor.used.number : '-'}})
               setExportable(prev => [...prev, ...newres])
-              setCurrent(exportable.length)
               i+=100
             }
-          }catch(e){
-            console.log(e)
-          }finally{
-            setLoading(false)
           }
+        }catch(e){
+          console.log(e)
+        }finally{
+          setLoading(false)
+        }
     }
   
   
@@ -60,7 +83,7 @@ export default function Export({orgid, orgname, status, type, codeCount}) {
             <ModalCloseButton />
             <ModalBody pb={6}>
             Export <b>{status ? 'used':status === ''? 'all': 'used'} {type}</b> data. <br />
-            {loading && <><Spinner /><i> Preparing document... {current} data loaded...</i></>}
+            {loading && <><Spinner /><i> Preparing document... {exportable.length} data loaded...</i></>}
             </ModalBody>
             <ModalFooter>
                 {!loading && <Box bg={"blue.500"} color={"white"} p={2} borderRadius={5} mr={3}><CsvDownload data={exportable} headers={header} delimiter="," filename={orgname}/></Box>}

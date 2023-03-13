@@ -27,13 +27,11 @@ export default function Export({orgid, orgname, status, type, codeCount}) {
         onOpen()
         setLoading(true)
         try{
-          for (let i = 0; i < codeCount; i++) {
-            const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode/${orgid}/?skip=${i}&limit=${codeCount <= 1000?50:codeCount}&type=${type?type:''}&status=${status?status:''}`)
+            const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode/${orgid}/?skip=${0}&limit=${codeCount+10}&type=${type?type:''}&status=${status?status:''}`)
             const resp = await data.json()
             const newres = resp.resp.map((cor, key)=> {return {sn: key+1+i, code:cor.code, value:cor.value, used:cor.usable ? 'valid' : 'used', createdAt:fd(cor.createdAt), redeemedAt: !cor.used ? '-' : fd(cor.used.createdAt), redeemedBy: cor.used ? cor.used.number : '-'}})
-            setExportable(prev => [...prev, ...newres])
+            setExportable(newres)
             i+=100
-          }
         }catch(e){
           console.log(e)
         }finally{

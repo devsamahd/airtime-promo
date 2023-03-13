@@ -10,6 +10,7 @@ import {
     Box,
     Button,
     Spinner,
+    Text,
   } from '@chakra-ui/react'
 import { useState } from 'react'
 import { FaFileExport } from 'react-icons/fa'

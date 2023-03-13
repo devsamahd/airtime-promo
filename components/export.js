@@ -25,6 +25,8 @@ export default function Export({orgid, orgname, status, type, codeCount}) {
     
     const exportit = async() => {
         onOpen()
+        if (exportable.length>=codeCount) return true
+        setExportable([])
         setLoading(true)
         try{
             const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode/${orgid}/?skip=${0}&limit=${codeCount+10}&type=${type?type:''}&status=${status?status:''}`)

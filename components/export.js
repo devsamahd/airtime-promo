@@ -26,39 +26,12 @@ export default function Export({orgid, orgname, status, type, codeCount}) {
         onOpen()
         setLoading(true)
         try{
-          if(Boolean(status) && Boolean(type)){
-            for (let i = 0; i < codeCount; i++) {
-              const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode/${orgid}/?skip=${i}&limit=100&status=${status}&type=${type}`)
-              const resp = await data.json()
-              const newres = resp.resp.map((cor, key)=> {return {sn: key+1+i, code:cor.code, value:cor.value, used:cor.usable ? 'valid' : 'used', createdAt:fd(cor.createdAt), redeemedAt: !cor.used ? '-' : fd(cor.used.createdAt), redeemedBy: cor.used ? cor.used.number : '-'}})
-              setExportable(prev => [...prev, ...newres])
-              i+=100
-            }
-
-          }else if(Boolean(status)){
-            for (let i = 0; i < codeCount; i++) {
-              const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode/${orgid}/?skip=${i}&limit=100&status=${status}`)
-              const resp = await data.json()
-              const newres = resp.resp.map((cor, key)=> {return {sn: key+1+i, code:cor.code, value:cor.value, used:cor.usable ? 'valid' : 'used', createdAt:fd(cor.createdAt), redeemedAt: !cor.used ? '-' : fd(cor.used.createdAt), redeemedBy: cor.used ? cor.used.number : '-'}})
-              setExportable(prev => [...prev, ...newres])
-              i+=100
-            }
-          }else if(Boolean(type)){
-            for (let i = 0; i < codeCount; i++) {
-              const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode/${orgid}/?skip=${i}&limit=100&type=${type}}`)
-              const resp = await data.json()
-              const newres = resp.resp.map((cor, key)=> {return {sn: key+1+i, code:cor.code, value:cor.value, used:cor.usable ? 'valid' : 'used', createdAt:fd(cor.createdAt), redeemedAt: !cor.used ? '-' : fd(cor.used.createdAt), redeemedBy: cor.used ? cor.used.number : '-'}})
-              setExportable(prev => [...prev, ...newres])
-              i+=100
-            }
-          }else{
-            for (let i = 0; i < codeCount; i++) {
-              const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode/${orgid}/?skip=${i}&limit=100`)
-              const resp = await data.json()
-              const newres = resp.resp.map((cor, key)=> {return {sn: key+1+i, code:cor.code, value:cor.value, used:cor.usable ? 'valid' : 'used', createdAt:fd(cor.createdAt), redeemedAt: !cor.used ? '-' : fd(cor.used.createdAt), redeemedBy: cor.used ? cor.used.number : '-'}})
-              setExportable(prev => [...prev, ...newres])
-              i+=100
-            }
+          for (let i = 0; i < codeCount; i++) {
+            const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode/${orgid}/?skip=${i}&limit=${codeCount <= 1000?50:codeCount}&type=${type?type:''}&status=${status?status:''}`)
+            const resp = await data.json()
+            const newres = resp.resp.map((cor, key)=> {return {sn: key+1+i, code:cor.code, value:cor.value, used:cor.usable ? 'valid' : 'used', createdAt:fd(cor.createdAt), redeemedAt: !cor.used ? '-' : fd(cor.used.createdAt), redeemedBy: cor.used ? cor.used.number : '-'}})
+            setExportable(prev => [...prev, ...newres])
+            i+=100
           }
         }catch(e){
           console.log(e)
@@ -76,18 +49,20 @@ export default function Export({orgid, orgname, status, type, codeCount}) {
         <Modal
           isOpen={isOpen}
           onClose={onClose}
+          closeOnOverlayClick={false}
         >
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>Export Data</ModalHeader>
-            <ModalCloseButton />
+            {!loading && <ModalCloseButton />}
             <ModalBody pb={6}>
             Export <b>{status ? 'used':status === ''? 'all': 'used'} {type}</b> data. <br />
             {loading && <><Spinner /><i> Preparing document... {exportable.length} data loaded...</i></>}
             </ModalBody>
             <ModalFooter>
-                {!loading && <Box bg={"blue.500"} color={"white"} p={2} borderRadius={5} mr={3}><CsvDownload data={exportable} headers={header} delimiter="," filename={orgname}/></Box>}
-                <Button onClick={onClose}>Cancel</Button>
+                {!loading && <><Box bg={"blue.500"} color={"white"} p={2} borderRadius={5} mr={3}><CsvDownload data={exportable} headers={header} delimiter="," filename={`${orgname}${status?'-valid-':'-used-'}${type}`}/></Box>
+                <Button onClick={onClose}>Cancel</Button></>}
+                {loading && <Text color={'red'}>Reload to cancel</Text>}
             </ModalFooter>
           </ModalContent>
         </Modal>

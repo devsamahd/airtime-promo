@@ -15,6 +15,7 @@ const SingleOrg = ({orgid, orgN, codeCount}) => {
   const [page, setPage] = useState([0,10])
   const [pn, setPn] = useState(1)
   const [pages, setPages] = useState(0) 
+  const [cnt, setCnt] = useState(0)
 
   
 
@@ -60,6 +61,7 @@ const SingleOrg = ({orgid, orgN, codeCount}) => {
         const resp = await data.json()
         setPages(Math.round(parseInt(resp.count)/10))
         setRes(resp.resp)
+        setCnt(resp.count)
       }catch(e){
         console.log(e)
       }finally{
@@ -87,7 +89,7 @@ const SingleOrg = ({orgid, orgN, codeCount}) => {
         size='xl'
       /></Center>
         :<>
-          <Codes pg={page[0]} res={res} orgname={orgName} codeCount={codeCount} setPage={setPage} resp={res} orgid={orgid} tp={type} st={status} /><br /><br /><br />
+          <Codes pg={page[0]} res={res} orgname={orgName} codeCount={cnt} setPage={setPage} resp={res} orgid={orgid} tp={type} st={status} /><br /><br /><br />
           <Box display={'flex'} justifyContent={'space-evenly'}>
             <Input width={20} type={'submit'} onClick={decrement} disabled={pn > 1 ? false : true}  value="Prev" />
             <Box>Page <Input type={'number'} onChange={e=>setcrement(e.target.value)} width="45px" value={pn} border="0" /> of {pages}</Box>

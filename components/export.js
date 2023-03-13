@@ -56,7 +56,7 @@ export default function Export({orgid, orgname, status, type, codeCount}) {
             {!loading && <ModalCloseButton />}
             <ModalBody pb={6}>
             Export <b>{status ? 'used':status === ''? 'all': 'used'} {type}</b> data. <br />
-            {loading && <><Spinner /><i> Preparing document... {exportable.length} data loaded...</i></>}
+            {loading && <><Spinner /><i> Preparing document... </i></>}
             </ModalBody>
             <ModalFooter>
                 {!loading && <><Box bg={"blue.500"} color={"white"} p={2} borderRadius={5} mr={3}><CsvDownload data={exportable} headers={header} delimiter="," filename={`${orgname}${status?'-valid-':'-used-'}${type}`}/></Box>

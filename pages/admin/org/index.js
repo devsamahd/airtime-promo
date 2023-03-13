@@ -19,7 +19,7 @@ const Org = ({orgs}) => {
       <Grid templateColumns={{base:'repeat(1, 1fr)', md:'repeat(3, 1fr)'}} gap={5}>
           
               {(orgsData.filter(org => (((org.orgName).toLowerCase()).includes(search.toLowerCase())))).map((org, key)=> (
-                  <Link href={`/admin/org/${org._id}`}><GridItem><OrgCard org={org} key={key} /></GridItem></Link>
+                  <Link href={`/admin/org/${org._id}`} key={org._id}><GridItem><OrgCard org={org} key={key} /></GridItem></Link>
               ))}
               <AddOrg setOrg={setOrgsData} />
           

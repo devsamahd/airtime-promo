@@ -6,7 +6,7 @@ import { withPageAuthRequired } from "@auth0/nextjs-auth0/client"
 import { Box, Center, Heading, Input, Spinner } from "@chakra-ui/react"
 import { useState, useEffect } from "react"
 
-const SingleOrg = ({orgid, orgN, codeCount}) => {
+const SingleOrg = ({orgid, orgN}) => {
   const [orgName, setOrgName] = useState(orgN)
   const [type, setType] = useState('')
   const [status, setStatus] = useState('')
@@ -106,8 +106,7 @@ export const getServerSideProps = async({params})=>{
     const orgreq = await fetch(`${process.env.NEXT_PUBLIC_BE}/org/${orgid}`)
     const orgs = await orgreq.json()
     const orgN = orgs.orgName
-    const codeCount = orgs.codeCount
     return {
-      props:{orgid, orgN, codeCount}
+      props:{orgid, orgN }
   }
 }

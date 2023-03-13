@@ -29,7 +29,6 @@ export default function Export({orgid, orgname, status, type, codeCount}) {
         try{
             const data = await fetch(`${process.env.NEXT_PUBLIC_BE}/generateCode/${orgid}/?skip=${0}&limit=${codeCount+10}&type=${type?type:''}&status=${status?status:''}`)
             const resp = await data.json()
-            console.log(resp)
             const newres = resp.resp.map((cor, key)=> {return {sn: key+1  , code:cor.code, value:cor.value, used:cor.usable ? 'valid' : 'used', createdAt:fd(cor.createdAt), redeemedAt: !cor.used ? '-' : fd(cor.used.createdAt), redeemedBy: cor.used ? cor.used.number : '-'}})
             setExportable(newres)
         }catch(e){
